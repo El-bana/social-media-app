@@ -4,6 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
 import withWidth from "@material-ui/core/withWidth";
+import MiniPostList from "./MiniPostList";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -30,6 +31,7 @@ export default function Homepage() {
 				<Grid container spacing={0}>
 					<Grid item sm={12} md={8}>
 						<h1>hi hi hi</h1>
+						<MiniPostList />
 					</Grid>
 					<Grid sm={4}>
 						<Hidden smDown>
