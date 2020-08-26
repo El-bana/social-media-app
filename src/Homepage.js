@@ -5,11 +5,16 @@ import { makeStyles } from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
 import withWidth from "@material-ui/core/withWidth";
 import MiniPostList from "./MiniPostList";
+import Navbar from "./Navbar";
+import Banner from "./Banner";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
 		backgroundColor: "white",
+	},
+	posts: {
+		margin: "0 4rem",
 	},
 }));
 
@@ -17,29 +22,25 @@ export default function Homepage() {
 	const classes = useStyles();
 
 	return (
-		<div>
+		<Grid container>
 			{/**NAVBAR GOES HERE*/}
-			<Grid item xs={12}>
-				<h1>Navbar</h1>
-			</Grid>
+			<Navbar />
 			{/**HEADER GOES HERE*/}
-			<Grid item xs={12}>
-				<h1>Header</h1>
-			</Grid>
+			<Banner />
 			{/**THE MAIN BODY WITH FEED AND TAGS*/}
 			<div className={classes.root}>
-				<Grid container spacing={0}>
-					<Grid item sm={12} md={8}>
+				<Grid item container spacing={0}>
+					<Grid item sm={12} md={8} className={classes.posts}>
 						<h1>hi hi hi</h1>
 						<MiniPostList />
 					</Grid>
-					<Grid sm={4}>
+					<Grid sm={2}>
 						<Hidden smDown>
 							<h1>Tags</h1>
 						</Hidden>
 					</Grid>
 				</Grid>
 			</div>
-		</div>
+		</Grid>
 	);
 }

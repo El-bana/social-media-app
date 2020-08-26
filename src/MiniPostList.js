@@ -35,6 +35,8 @@ class MiniPostList extends Component {
 				userImage={art.author.image}
 				postTitle={art.title}
 				postDesc={art.description}
+				postDate={art.createdAt}
+				postLike={art.favoritesCount}
 			/>
 		));
 		return (
