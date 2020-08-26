@@ -1,14 +1,21 @@
 import React, { Component } from "react";
 import MiniPost from "./MiniPost";
 import axios from "axios";
-import Divider from "@material-ui/core/Divider";
-import List from "@material-ui/core/List";
+import { v4 as uuid } from "uuid";
 import { withStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const styles = {
 	root: {
 		width: "100%",
+	},
+	links: {
+		textDecoration: "none",
+		borderBottom: "2px solid #5cb85c",
+		color: "#5cb85c",
+		marginBotoom: "1rem",
+		padding: "1rem",
 	},
 };
 class MiniPostList extends Component {
@@ -19,12 +26,11 @@ class MiniPostList extends Component {
 		};
 	}
 	async componentDidMount() {
-		let res = await axios.get(
+		const res = await axios.get(
 			"https://conduit.productionready.io/api/articles",
 		);
-		let articles = res.data.articles;
 		this.setState({
-			articles: articles,
+			articles: res.data.articles,
 		});
 	}
 	render() {
@@ -37,15 +43,22 @@ class MiniPostList extends Component {
 				postDesc={art.description}
 				postDate={art.createdAt}
 				postLike={art.favoritesCount}
+				key={uuid()}
 			/>
 		));
 		return (
 			<Grid
 				container
+				item
 				direction='column'
 				justify='flex-start'
 				alignItems='flex-start'
 			>
+				<div className={classes.main}>
+					<Link to='/' className={classes.links}>
+						Global Feed
+					</Link>
+				</div>
 				{articles}
 			</Grid>
 		);

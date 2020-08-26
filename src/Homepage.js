@@ -1,12 +1,11 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
-import withWidth from "@material-ui/core/withWidth";
 import MiniPostList from "./MiniPostList";
 import Navbar from "./Navbar";
 import Banner from "./Banner";
+import Tags from "./Tags";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -14,7 +13,10 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: "white",
 	},
 	posts: {
-		margin: "0 4rem",
+		margin: "0 3rem",
+	},
+	tags: {
+		margin: "1rem 0",
 	},
 }));
 
@@ -31,12 +33,11 @@ export default function Homepage() {
 			<div className={classes.root}>
 				<Grid item container spacing={0}>
 					<Grid item sm={12} md={8} className={classes.posts}>
-						<h1>hi hi hi</h1>
 						<MiniPostList />
 					</Grid>
-					<Grid sm={2}>
+					<Grid item sm={3} className={classes.tags}>
 						<Hidden smDown>
-							<h1>Tags</h1>
+							<Tags />
 						</Hidden>
 					</Grid>
 				</Grid>

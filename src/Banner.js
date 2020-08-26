@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
 		color: "white",
 		fontFamily: "titillium web,sans-serif",
 		lineHeight: "1.5",
+		marginBottom: "1rem",
 		boxShadow:
 			"inset 0 8px 8px -8px rgba(0,0,0,.3), inset 0 -8px 8px -8px rgba(0,0,0,.3)",
 	},
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	secondaryText: {
 		fontSize: "1.5rem",
-		fontWeight: "200",
+		fontWeight: "300",
 		margin: "0.5rem",
 	},
 }));

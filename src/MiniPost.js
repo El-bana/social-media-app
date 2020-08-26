@@ -18,9 +18,11 @@ export default function MiniPost({
 
 	return (
 		<Grid item xs={12} className={classes.root}>
+			<Divider className={classes.divider} />
+
 			<div className={classes.articleMeta}>
 				<Link to='/'>
-					<img src={userImage} className={classes.img} />
+					<img src={userImage} alt='' className={classes.img} />
 				</Link>
 				<div className={classes.info}>
 					<Link to='/' className={classes.author}>
@@ -36,13 +38,12 @@ export default function MiniPost({
 				</div>
 			</div>
 			<div className={classes.article}>
-				<a href='#'>
+				<Link to='/'>
 					<h1>{postTitle}</h1>
 					<p>{postDesc}</p>
 					<span>read more</span>
-				</a>
+				</Link>
 			</div>
-			<Divider className={classes.divider} />
 		</Grid>
 	);
 }
