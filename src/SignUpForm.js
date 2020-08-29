@@ -45,9 +45,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function SignInForm() {
+export default function SignUpForm() {
 	const classes = useStyles();
 
+	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const handleEmailChange = (e) => {
@@ -55,6 +56,9 @@ export default function SignInForm() {
 	};
 	const handlePasswordChange = (e) => {
 		setPassword(e.target.value);
+	};
+	const handleUsernameChange = (e) => {
+		setUsername(e.target.value);
 	};
 	return (
 		<ThemeProvider theme={theme}>
@@ -71,10 +75,21 @@ export default function SignInForm() {
 					justify='center'
 				>
 					<Grid item xs={12}>
-						<h1>Sign In</h1>
-						<Link to='/register'>Need an account?</Link>
+						<h1>Sign Up</h1>
+						<Link to='/login'>Have an account?</Link>
 					</Grid>
 					<form className={classes.form}>
+						<Grid item xs={12}>
+							<TextField
+								type='text'
+								value={username}
+								label='Username'
+								variant='outlined'
+								onChange={handleUsernameChange}
+								className={classes.formItem}
+								fullWidth
+							/>
+						</Grid>
 						<Grid item xs={12}>
 							<TextField
 								type='email'

@@ -26,6 +26,14 @@ const useStyles = makeStyles((theme) => ({
 			color: "rgba(0,0,0,.3)",
 			fontWeight: "500",
 			fontSize: "1rem",
+			"&:hover": {
+				color: "rgba(0,0,0,0.6)",
+			},
+		},
+	},
+	active: {
+		"& a": {
+			color: "black",
 		},
 	},
 }));
