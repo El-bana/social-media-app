@@ -20,7 +20,7 @@ export default function Navbar() {
 						<ListItemText primary={<Link to='/'>Home</Link>} />
 					</ListItem>
 					<ListItem>
-						<ListItemText primary={<Link to='#'>Sign in</Link>} />
+						<ListItemText primary={<Link to='/login'>Sign in</Link>} />
 					</ListItem>
 					<ListItem>
 						<ListItemText primary={<Link to='#'>Sign up</Link>} />
