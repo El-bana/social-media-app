@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import axios from "axios";
 import {
 	makeStyles,
 	createMuiTheme,
@@ -60,6 +61,13 @@ export default function SignUpForm() {
 	const handleUsernameChange = (e) => {
 		setUsername(e.target.value);
 	};
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		const res = axios.post("https://conduit.productionready.io/api/users", {
+			user: { email: email, password: password, username: username },
+		});
+		console.log(res);
+	};
 	return (
 		<ThemeProvider theme={theme}>
 			<Grid container justify='center'>
@@ -78,7 +86,7 @@ export default function SignUpForm() {
 						<h1>Sign Up</h1>
 						<Link to='/login'>Have an account?</Link>
 					</Grid>
-					<form className={classes.form}>
+					<form className={classes.form} onSubmit={handleSubmit}>
 						<Grid item xs={12}>
 							<TextField
 								type='text'

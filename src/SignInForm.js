@@ -9,6 +9,7 @@ import {
 import { Grid } from "@material-ui/core";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const theme = createMuiTheme({
 	palette: {
@@ -56,6 +57,14 @@ export default function SignInForm() {
 	const handlePasswordChange = (e) => {
 		setPassword(e.target.value);
 	};
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		const res = axios.post(
+			"https://conduit.productionready.io/api/users/login",
+			{ user: { email: email, password: password } },
+		);
+		console.log(res);
+	};
 	return (
 		<ThemeProvider theme={theme}>
 			<Grid container justify='center'>
@@ -74,7 +83,7 @@ export default function SignInForm() {
 						<h1>Sign In</h1>
 						<Link to='/register'>Need an account?</Link>
 					</Grid>
-					<form className={classes.form}>
+					<form className={classes.form} onSubmit={handleSubmit}>
 						<Grid item xs={12}>
 							<TextField
 								type='email'
