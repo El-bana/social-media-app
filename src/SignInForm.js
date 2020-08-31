@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import {
@@ -10,6 +10,7 @@ import { Grid } from "@material-ui/core";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { LoggedInContext } from "./Contexts/LoggedIn.context";
 
 const theme = createMuiTheme({
 	palette: {
@@ -44,13 +45,19 @@ const useStyles = makeStyles((theme) => ({
 		margin: "0.3rem",
 		color: "white",
 	},
+	errors: {
+		textAlign: "left",
+		color: "#b85c5c",
+		fontWeight: "bold",
+	},
 }));
 
-export default function SignInForm() {
+export default function SignInForm(props) {
 	const classes = useStyles();
-
+	const { logIn, changeName } = useContext(LoggedInContext);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [errors, setErrors] = useState(false);
 	const handleEmailChange = (e) => {
 		setEmail(e.target.value);
 	};
@@ -59,11 +66,22 @@ export default function SignInForm() {
 	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const res = axios.post(
-			"https://conduit.productionready.io/api/users/login",
-			{ user: { email: email, password: password } },
-		);
-		console.log(res);
+		localStorage.clear();
+		try {
+			const res = await axios.post(
+				"https://conduit.productionready.io/api/users/login",
+				{ user: { email: email, password: password } },
+			);
+			console.log(res.data);
+			setErrors(false);
+			logIn();
+			changeName(res.data.user.username);
+			localStorage.setItem("token", res.data.user.token);
+			props.history.push("/");
+		} catch (error) {
+			console.log(error.response.data.errors);
+			setErrors(true);
+		}
 	};
 	return (
 		<ThemeProvider theme={theme}>
@@ -82,6 +100,11 @@ export default function SignInForm() {
 					<Grid item xs={12}>
 						<h1>Sign In</h1>
 						<Link to='/register'>Need an account?</Link>
+						{errors && (
+							<ul className={classes.errors}>
+								<li>email or password is invalid</li>
+							</ul>
+						)}
 					</Grid>
 					<form className={classes.form} onSubmit={handleSubmit}>
 						<Grid item xs={12}>

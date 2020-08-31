@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
@@ -10,6 +10,7 @@ import {
 import { Grid } from "@material-ui/core";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
+import { LoggedInContext } from "./Contexts/LoggedIn.context";
 
 const theme = createMuiTheme({
 	palette: {
@@ -51,9 +52,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function SignUpForm() {
+export default function SignUpForm(props) {
 	const classes = useStyles();
-
+	const { logIn, changeName } = useContext(LoggedInContext);
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -76,6 +77,10 @@ export default function SignUpForm() {
 			);
 			console.log(res);
 			setErrors([]);
+			logIn();
+			changeName(res.data.user.username);
+			localStorage.setItem("token", res.data.user.token);
+			props.history.push("/");
 		} catch (error) {
 			const errors = error.response.data.errors;
 			let text = [];
