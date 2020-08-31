@@ -44,6 +44,11 @@ const useStyles = makeStyles((theme) => ({
 		margin: "0.3rem",
 		color: "white",
 	},
+	errors: {
+		textAlign: "left",
+		color: "#b85c5c",
+		fontWeight: "bold",
+	},
 }));
 
 export default function SignUpForm() {
@@ -52,6 +57,7 @@ export default function SignUpForm() {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [errors, setErrors] = useState([]);
 	const handleEmailChange = (e) => {
 		setEmail(e.target.value);
 	};
@@ -63,10 +69,22 @@ export default function SignUpForm() {
 	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const res = axios.post("https://conduit.productionready.io/api/users", {
-			user: { email: email, password: password, username: username },
-		});
-		console.log(res);
+		try {
+			const res = await axios.post(
+				"https://conduit.productionready.io/api/users",
+				{ user: { email: email, password: password, username: username } },
+			);
+			console.log(res);
+			setErrors([]);
+		} catch (error) {
+			const errors = error.response.data.errors;
+			let text = [];
+			for (const er in errors) {
+				text.push(`${er}: ${errors[er][0]} `);
+			}
+			console.log(text);
+			setErrors(text);
+		}
 	};
 	return (
 		<ThemeProvider theme={theme}>
@@ -85,6 +103,13 @@ export default function SignUpForm() {
 					<Grid item xs={12}>
 						<h1>Sign Up</h1>
 						<Link to='/login'>Have an account?</Link>
+						{errors.length !== 0 && (
+							<ul className={classes.errors}>
+								{errors.map((err) => (
+									<li>{err}</li>
+								))}
+							</ul>
+						)}
 					</Grid>
 					<form className={classes.form} onSubmit={handleSubmit}>
 						<Grid item xs={12}>
@@ -128,7 +153,7 @@ export default function SignUpForm() {
 								fullWidth
 								className={classes.formItem}
 							>
-								Sign In
+								Sign Up
 							</Button>
 						</Grid>
 					</form>
