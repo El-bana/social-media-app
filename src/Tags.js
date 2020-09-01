@@ -37,13 +37,9 @@ export default function Tags() {
 	const classes = useStyles();
 
 	useEffect(() => {
-		const fetchTags = async () => {
-			const res = await axios.get(
-				"https://conduit.productionready.io/api/tags",
-			);
-			setTags(res.data.tags);
-		};
-		fetchTags();
+		axios
+			.get("https://conduit.productionready.io/api/tags")
+			.then((res) => setTags(res.data.tags));
 	}, []);
 	return (
 		<ThemeProvider theme={theme}>
