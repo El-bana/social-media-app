@@ -27,7 +27,7 @@ class MiniPostList extends Component {
 	}
 	async componentDidMount() {
 		const res = await axios.get(
-			"https://conduit.productionready.io/api/articles",
+			`https://conduit.productionready.io/api/articles?author=${this.props.name}`,
 		);
 		this.setState({
 			articles: res.data.articles,
