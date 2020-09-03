@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Grid, List, ListItem } from "@material-ui/core";
 import { Link, NavLink } from "react-router-dom";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -7,7 +7,14 @@ import { LoggedInContext } from "./Contexts/LoggedIn.context";
 
 export default function Navbar() {
 	const classes = useStyles();
-	const { loggedIn, name } = useContext(LoggedInContext);
+	const { user } = useContext(LoggedInContext);
+	const [loggedIn, setLoggedIn] = useState(false);
+
+	useEffect(() => {
+		if (localStorage.getItem("token")) {
+			setLoggedIn(true);
+		}
+	});
 
 	return (
 		<Grid container item xs={12} className={classes.root}>
@@ -118,12 +125,12 @@ export default function Navbar() {
 								primary={
 									<NavLink
 										exact
-										to={`${name}`}
+										to={`${user.username}`}
 										activeStyle={{
 											color: "rgba(0,0,0,0.6)",
 										}}
 									>
-										{name}
+										{user.username}
 									</NavLink>
 								}
 							/>

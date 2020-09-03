@@ -8,7 +8,6 @@ import {
 	ThemeProvider,
 } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
-import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import { LoggedInContext } from "./Contexts/LoggedIn.context";
 
@@ -54,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUpForm(props) {
 	const classes = useStyles();
-	const { logIn, changeName } = useContext(LoggedInContext);
+	const { logIn, setUser } = useContext(LoggedInContext);
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -77,10 +76,9 @@ export default function SignUpForm(props) {
 			);
 			console.log(res);
 			setErrors([]);
-			logIn();
-			changeName(res.data.user.username);
+			setUser(res.user);
 			localStorage.setItem("token", res.data.user.token);
-			props.history.push("/");
+			window.location = "/";
 		} catch (error) {
 			const errors = error.response.data.errors;
 			let text = [];
@@ -94,9 +92,6 @@ export default function SignUpForm(props) {
 	return (
 		<ThemeProvider theme={theme}>
 			<Grid container justify='center'>
-				<Grid item xs={12}>
-					<Navbar />
-				</Grid>
 				<Grid
 					container
 					item

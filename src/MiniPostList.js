@@ -32,6 +32,8 @@ class MiniPostList extends Component {
 		this.setState({
 			articles: res.data.articles,
 		});
+		console.log(this.state.articles);
+		console.log(this.props.name);
 	}
 	render() {
 		const { classes } = this.props;

@@ -33,23 +33,25 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Homepage() {
+export default function Profile(props) {
 	const classes = useStyles();
-	const { name, image } = useContext(LoggedInContext);
+	const { user } = useContext(LoggedInContext);
+	const { image, username } = user;
+
 	return (
 		<Grid container>
 			{/**HEADER GOES HERE*/}
 			<Grid item xs={12} className={classes.banner}>
 				<div>
 					<img src={image} className={classes.image} />
-					<h1 className={classes.name}>{name}</h1>
+					<h1 className={classes.name}>{username}</h1>
 				</div>
 			</Grid>
 			{/**THE MAIN BODY WITH FEED AND TAGS*/}
 			<div className={classes.root}>
 				<Grid item container spacing={0}>
 					<Grid item sm={12} className={classes.posts}>
-						<MiniPostList name={name} />
+						<MiniPostList name={props.match.params.username} />
 					</Grid>
 				</Grid>
 			</div>

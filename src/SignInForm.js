@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInForm(props) {
 	const classes = useStyles();
-	const { logIn, changeName } = useContext(LoggedInContext);
+	const { logIn, setUser } = useContext(LoggedInContext);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [errors, setErrors] = useState(false);
@@ -74,10 +74,9 @@ export default function SignInForm(props) {
 			);
 			console.log(res.data);
 			setErrors(false);
-			logIn();
-			changeName(res.data.user.username);
+			setUser(res.data.user.username);
 			localStorage.setItem("token", res.data.user.token);
-			props.history.push("/");
+			window.location = "/";
 		} catch (error) {
 			console.log(error.response.data.errors);
 			setErrors(true);
@@ -86,9 +85,6 @@ export default function SignInForm(props) {
 	return (
 		<ThemeProvider theme={theme}>
 			<Grid container justify='center'>
-				<Grid item xs={12}>
-					<Navbar />
-				</Grid>
 				<Grid
 					container
 					item
