@@ -6,22 +6,20 @@ import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
 import Settings from "./Settings";
 import Profile from "./Profile";
+import Editor from "./Editor";
 import Navbar from "./Navbar";
 import { LoggedInContext } from "./Contexts/LoggedIn.context";
 import axios from "axios";
 
 function App() {
-	const { name, logIn, changeName, changeImage } = useContext(LoggedInContext);
+	const { setUser } = useContext(LoggedInContext);
 	useEffect(() => {
 		if (localStorage.hasOwnProperty("token")) {
 			const fetchUser = async () => {
 				const res = await axios("https://conduit.productionready.io/api/user", {
 					headers: { Authorization: `Token ${localStorage.getItem("token")}` },
 				});
-				logIn();
-				changeName(res.data.user.username);
-				changeImage(res.data.user.image);
-				console.log(res);
+				setUser(res.data.user);
 			};
 			fetchUser();
 		}
@@ -34,6 +32,7 @@ function App() {
 				<Route exact path='/login' component={SignInForm} />
 				<Route exact path='/register' component={SignUpForm} />
 				<Route exact path='/settings' component={Settings} />
+				<Route exact path='/editor' component={Editor} />
 				<Route exact path='/:username' component={Profile} />
 				<Route exact path='/' component={Homepage} />
 			</Switch>
