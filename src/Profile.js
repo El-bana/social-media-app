@@ -44,7 +44,7 @@ export default function Profile(props) {
 			<Grid item xs={12} className={classes.banner}>
 				<div>
 					<img src={image} className={classes.image} />
-					<h1 className={classes.name}>{username}</h1>
+					<h1 className={classes.name}>{props.match.params.username}</h1>
 				</div>
 			</Grid>
 			{/**THE MAIN BODY WITH FEED AND TAGS*/}

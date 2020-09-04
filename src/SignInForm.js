@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInForm(props) {
 	const classes = useStyles();
-	const { logIn, setUser } = useContext(LoggedInContext);
+	const { setUser } = useContext(LoggedInContext);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [errors, setErrors] = useState(false);

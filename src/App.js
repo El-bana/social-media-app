@@ -8,21 +8,22 @@ import Settings from "./Settings";
 import Profile from "./Profile";
 import Editor from "./Editor";
 import Navbar from "./Navbar";
+import Article from "./Article";
 import { LoggedInContext } from "./Contexts/LoggedIn.context";
 import axios from "axios";
 
 function App() {
 	const { setUser } = useContext(LoggedInContext);
 	useEffect(() => {
-		if (localStorage.hasOwnProperty("token")) {
-			const fetchUser = async () => {
+		const fetchUser = async () => {
+			if (localStorage.hasOwnProperty("token")) {
 				const res = await axios("https://conduit.productionready.io/api/user", {
 					headers: { Authorization: `Token ${localStorage.getItem("token")}` },
 				});
 				setUser(res.data.user);
-			};
-			fetchUser();
-		}
+			}
+		};
+		fetchUser();
 	}, []);
 
 	return (
@@ -34,6 +35,7 @@ function App() {
 				<Route exact path='/settings' component={Settings} />
 				<Route exact path='/editor' component={Editor} />
 				<Route exact path='/:username' component={Profile} />
+				<Route exact path='/article/:slug' component={Article} />
 				<Route exact path='/' component={Homepage} />
 			</Switch>
 		</div>

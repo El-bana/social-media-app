@@ -30,19 +30,20 @@ export default function Editor() {
 	const { value: title, bind: bindTitle } = useInputState("");
 	const { value: description, bind: bindDescription } = useInputState("");
 	const { value: body, bind: bindBody } = useInputState("");
+	const { value: tags, bind: bindTags } = useInputState("");
 	const classes = useStyles();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			await axios.post(
+			const res = await axios.post(
 				"https://conduit.productionready.io/api/articles",
 				{
 					article: {
 						title: title,
 						description: description,
 						body: body,
-						tagList: [],
+						tagList: tags.split(" "),
 					},
 				},
 				{
@@ -51,7 +52,8 @@ export default function Editor() {
 					},
 				},
 			);
-			window.location = "/";
+			console.log(res);
+			window.location = `/article/${res.data.article.slug}`;
 		} catch (error) {
 			console.log("error");
 		}
@@ -66,7 +68,7 @@ export default function Editor() {
 				justify='center'
 				alignItems='center'
 			>
-				<Grid item xs={8}>
+				<Grid item xs={9}>
 					<form onSubmit={handleSubmit}>
 						<TextField
 							type='text'
@@ -96,6 +98,15 @@ export default function Editor() {
 							onChange={bindBody}
 							multiline
 							rows={8}
+							margin='dense'
+							fullWidth
+						/>
+						<TextField
+							type='text'
+							value={tags}
+							placeholder='Enter your Tags " " space seperated'
+							variant='outlined'
+							onChange={bindTags}
 							margin='dense'
 							fullWidth
 						/>

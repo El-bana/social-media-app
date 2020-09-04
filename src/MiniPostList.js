@@ -45,6 +45,7 @@ class MiniPostList extends Component {
 				postDesc={art.description}
 				postDate={art.createdAt}
 				postLike={art.favoritesCount}
+				slug={art.slug}
 				key={uuid()}
 			/>
 		));

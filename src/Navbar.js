@@ -14,7 +14,7 @@ export default function Navbar() {
 		if (localStorage.getItem("token")) {
 			setLoggedIn(true);
 		}
-	});
+	}, []);
 
 	return (
 		<Grid container item xs={12} className={classes.root}>
