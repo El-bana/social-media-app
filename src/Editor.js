@@ -2,19 +2,7 @@ import React from "react";
 import { Grid, TextField, Button } from "@material-ui/core";
 import useInputState from "./Hooks/useInputState";
 import axios from "axios";
-import {
-	makeStyles,
-	createMuiTheme,
-	ThemeProvider,
-} from "@material-ui/core/styles";
-
-const theme = createMuiTheme({
-	palette: {
-		primary: {
-			main: "#5cb85c",
-		},
-	},
-});
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
 	btn: {
@@ -60,67 +48,65 @@ export default function Editor() {
 	};
 
 	return (
-		<ThemeProvider theme={theme}>
-			<Grid
-				container
-				xs={12}
-				direction='row'
-				justify='center'
-				alignItems='center'
-			>
-				<Grid item xs={9}>
-					<form onSubmit={handleSubmit}>
-						<TextField
-							type='text'
-							value={title}
-							placeholder='Article Title'
-							variant='outlined'
-							onChange={bindTitle}
-							margin='normal'
-							fullWidth
-						/>
-						<TextField
-							type='text'
-							value={description}
-							placeholder='What is this about ?'
-							variant='outlined'
-							onChange={bindDescription}
-							multiline
-							rows={1}
-							margin='dense'
-							fullWidth
-						/>
-						<TextField
-							type='text'
-							value={body}
-							placeholder='Write your article (in markdown)'
-							variant='outlined'
-							onChange={bindBody}
-							multiline
-							rows={8}
-							margin='dense'
-							fullWidth
-						/>
-						<TextField
-							type='text'
-							value={tags}
-							placeholder='Enter your Tags " " space seperated'
-							variant='outlined'
-							onChange={bindTags}
-							margin='dense'
-							fullWidth
-						/>
-						<Button
-							color='primary'
-							variant='contained'
-							type='submit'
-							className={classes.btn}
-						>
-							Publish Article
-						</Button>
-					</form>
-				</Grid>
+		<Grid
+			container
+			xs={12}
+			direction='row'
+			justify='center'
+			alignItems='center'
+		>
+			<Grid item xs={9}>
+				<form onSubmit={handleSubmit}>
+					<TextField
+						type='text'
+						value={title}
+						placeholder='Article Title'
+						variant='outlined'
+						onChange={bindTitle}
+						margin='normal'
+						fullWidth
+					/>
+					<TextField
+						type='text'
+						value={description}
+						placeholder='What is this about ?'
+						variant='outlined'
+						onChange={bindDescription}
+						multiline
+						rows={1}
+						margin='dense'
+						fullWidth
+					/>
+					<TextField
+						type='text'
+						value={body}
+						placeholder='Write your article (in markdown)'
+						variant='outlined'
+						onChange={bindBody}
+						multiline
+						rows={8}
+						margin='dense'
+						fullWidth
+					/>
+					<TextField
+						type='text'
+						value={tags}
+						placeholder='Enter your Tags " " space seperated'
+						variant='outlined'
+						onChange={bindTags}
+						margin='dense'
+						fullWidth
+					/>
+					<Button
+						color='primary'
+						variant='contained'
+						type='submit'
+						className={classes.btn}
+					>
+						Publish Article
+					</Button>
+				</form>
 			</Grid>
-		</ThemeProvider>
+		</Grid>
 	);
 }

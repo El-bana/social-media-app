@@ -2,21 +2,9 @@ import React, { useContext } from "react";
 import { Grid, TextField, Button } from "@material-ui/core";
 import useInputState from "./Hooks/useInputState";
 import axios from "axios";
-import {
-	makeStyles,
-	createMuiTheme,
-	ThemeProvider,
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import "./assets/css/titilliumWeb.css";
 import { LoggedInContext } from "./Contexts/LoggedIn.context";
-
-const theme = createMuiTheme({
-	palette: {
-		primary: {
-			main: "#5cb85c",
-		},
-	},
-});
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -47,67 +35,65 @@ export default function Settings() {
 	const classes = useStyles();
 
 	return (
-		<ThemeProvider theme={theme}>
-			<Grid
-				container
-				xs={12}
-				direction='row'
-				justify='center'
-				alignItems='center'
-			>
-				<Grid item xs={6} className={classes.root}>
-					<h1>Your Settings</h1>
-					<form>
-						<TextField
-							type='text'
-							value={image}
-							placeholder='url of picture'
-							variant='outlined'
-							onChange={bindImage}
-							margin='dense'
-							fullWidth
-						/>
-						<TextField
-							type='text'
-							value={username}
-							placeholder='Username'
-							variant='outlined'
-							onChange={bindUsername}
-							margin='normal'
-							fullWidth
-						/>
-						<TextField
-							type='text'
-							value={bio}
-							placeholder='Short bio about you'
-							variant='outlined'
-							onChange={bindBio}
-							margin='normal'
-							multiline
-							rows={8}
-							fullWidth
-						/>
-						<TextField
-							type='text'
-							value={email}
-							placeholder='Email'
-							variant='outlined'
-							onChange={bindEmail}
-							margin='normal'
-							fullWidth
-						/>
-						<TextField
-							type='password'
-							value={password}
-							placeholder='Password'
-							variant='outlined'
-							onChange={bindPassword}
-							margin='normal'
-							fullWidth
-						/>
-					</form>
-				</Grid>
+		<Grid
+			container
+			xs={12}
+			direction='row'
+			justify='center'
+			alignItems='center'
+		>
+			<Grid item xs={6} className={classes.root}>
+				<h1>Your Settings</h1>
+				<form>
+					<TextField
+						type='text'
+						value={image}
+						placeholder='url of picture'
+						variant='outlined'
+						onChange={bindImage}
+						margin='dense'
+						fullWidth
+					/>
+					<TextField
+						type='text'
+						value={username}
+						placeholder='Username'
+						variant='outlined'
+						onChange={bindUsername}
+						margin='normal'
+						fullWidth
+					/>
+					<TextField
+						type='text'
+						value={bio}
+						placeholder='Short bio about you'
+						variant='outlined'
+						onChange={bindBio}
+						margin='normal'
+						multiline
+						rows={8}
+						fullWidth
+					/>
+					<TextField
+						type='text'
+						value={email}
+						placeholder='Email'
+						variant='outlined'
+						onChange={bindEmail}
+						margin='normal'
+						fullWidth
+					/>
+					<TextField
+						type='password'
+						value={password}
+						placeholder='Password'
+						variant='outlined'
+						onChange={bindPassword}
+						margin='normal'
+						fullWidth
+					/>
+				</form>
 			</Grid>
-		</ThemeProvider>
+		</Grid>
 	);
 }

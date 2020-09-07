@@ -1,24 +1,12 @@
 import React, { useState, useContext } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {
-	makeStyles,
-	createMuiTheme,
-	ThemeProvider,
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { LoggedInContext } from "./Contexts/LoggedIn.context";
-
-const theme = createMuiTheme({
-	palette: {
-		primary: {
-			main: "#5cb85c",
-		},
-	},
-});
 
 const useStyles = makeStyles((theme) => ({
 	main: {
@@ -83,62 +71,60 @@ export default function SignInForm(props) {
 		}
 	};
 	return (
-		<ThemeProvider theme={theme}>
-			<Grid container justify='center'>
-				<Grid
-					container
-					item
-					sm={6}
-					className={classes.main}
-					direction='row'
-					justify='center'
-				>
-					<Grid item xs={12}>
-						<h1>Sign In</h1>
-						<Link to='/register'>Need an account?</Link>
-						{errors && (
-							<ul className={classes.errors}>
-								<li>email or password is invalid</li>
-							</ul>
-						)}
-					</Grid>
-					<form className={classes.form} onSubmit={handleSubmit}>
-						<Grid item xs={12}>
-							<TextField
-								type='email'
-								value={email}
-								label='Email'
-								variant='outlined'
-								onChange={handleEmailChange}
-								className={classes.formItem}
-								fullWidth
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								type='password'
-								value={password}
-								label='Password'
-								variant='outlined'
-								onChange={handlePasswordChange}
-								className={classes.formItem}
-								fullWidth
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<Button
-								color='primary'
-								variant='contained'
-								type='submit'
-								fullWidth
-								className={classes.formItem}
-							>
-								Sign In
-							</Button>
-						</Grid>
-					</form>
+		<Grid container justify='center'>
+			<Grid
+				container
+				item
+				sm={6}
+				className={classes.main}
+				direction='row'
+				justify='center'
+			>
+				<Grid item xs={12}>
+					<h1>Sign In</h1>
+					<Link to='/register'>Need an account?</Link>
+					{errors && (
+						<ul className={classes.errors}>
+							<li>email or password is invalid</li>
+						</ul>
+					)}
 				</Grid>
+				<form className={classes.form} onSubmit={handleSubmit}>
+					<Grid item xs={12}>
+						<TextField
+							type='email'
+							value={email}
+							label='Email'
+							variant='outlined'
+							onChange={handleEmailChange}
+							className={classes.formItem}
+							fullWidth
+						/>
+					</Grid>
+					<Grid item xs={12}>
+						<TextField
+							type='password'
+							value={password}
+							label='Password'
+							variant='outlined'
+							onChange={handlePasswordChange}
+							className={classes.formItem}
+							fullWidth
+						/>
+					</Grid>
+					<Grid item xs={12}>
+						<Button
+							color='primary'
+							variant='contained'
+							type='submit'
+							fullWidth
+							className={classes.formItem}
+						>
+							Sign In
+						</Button>
+					</Grid>
+				</form>
 			</Grid>
-		</ThemeProvider>
+		</Grid>
 	);
 }

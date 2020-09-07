@@ -4,5 +4,6 @@ export default (initialVal) => {
 	const bind = (e) => {
 		setValue(e.target.value);
 	};
-	return { value, bind };
+	const reset = () => setValue("");
+	return { value, bind, reset };
 };
