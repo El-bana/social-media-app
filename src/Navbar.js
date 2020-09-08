@@ -125,7 +125,7 @@ export default function Navbar() {
 								primary={
 									<NavLink
 										exact
-										to={`${user.username}`}
+										to={`/${user.username}`}
 										activeStyle={{
 											color: "rgba(0,0,0,0.6)",
 										}}

@@ -4,6 +4,7 @@ import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import useInputState from "./Hooks/useInputState";
+import Comment from "./Comment";
 
 const useStyles = makeStyles((theme) => ({
 	banner: {
@@ -54,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
 	log: {
 		position: "relative",
 		margin: "auto",
+		marginBottom: "1rem",
 		width: "100%",
 		"& a": {
 			color: "#5cb85c",
@@ -87,32 +89,28 @@ const useStyles = makeStyles((theme) => ({
 		color: "white",
 		float: "right",
 	},
+	comment: {
+		border: "1px solid #e5e5e5",
+		padding: "1rem",
+	},
 }));
 
 export default function Article(props) {
 	const { slug } = props.match.params;
 	const [article, setArticle] = useState({});
+	const [comments, setComments] = useState([]);
 	const [author, setAuthor] = useState({});
 	const [loggedIn, setLoggedIn] = useState(false);
 	const { value: comment, bind: bindComment, reset } = useInputState("");
 
-	const submitComment = () => {
-		axios
-			.post(
-				`https://conduit.productionready.io/api/articles/${slug}/comments`,
-				{ comment: { body: comment } },
-				{
-					headers: {
-						Authorization: `Token ${localStorage.getItem("token")}`,
-					},
-				},
-			)
-			.then(reset());
+	const fetchComments = () => {
+		axios(
+			`https://conduit.productionready.io/api/articles/${slug}/comments`,
+		).then((res) => setComments(res.data.comments));
 	};
 
-	const classes = useStyles();
 	useEffect(() => {
-		const fetch = async () => {
+		const fetchArticle = async () => {
 			console.log(slug);
 			try {
 				if (localStorage.hasOwnProperty("token")) {
@@ -138,8 +136,25 @@ export default function Article(props) {
 				console.log("error");
 			}
 		};
-		fetch();
-	}, []);
+		fetchArticle();
+		fetchComments();
+	}, [slug]);
+
+	const submitComment = () => {
+		axios
+			.post(
+				`https://conduit.productionready.io/api/articles/${slug}/comments`,
+				{ comment: { body: comment } },
+				{
+					headers: {
+						Authorization: `Token ${localStorage.getItem("token")}`,
+					},
+				},
+			)
+			.then(fetchComments());
+	};
+
+	const classes = useStyles();
 
 	return (
 		<Grid container direction='column'>
@@ -197,6 +212,15 @@ export default function Article(props) {
 					</>
 				)}
 			</Grid>
+			{comments.map((comment) => (
+				<Comment
+					body={comment.body}
+					image={comment.author.image}
+					name={comment.author.username}
+					date={comment.createdAt}
+					key={comment.id}
+				/>
+			))}
 		</Grid>
 	);
 }
