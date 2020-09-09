@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Grid, Divider, TextField, Button } from "@material-ui/core";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import useInputState from "./Hooks/useInputState";
 import Comment from "./Comment";
+import { LoggedInContext } from "./Contexts/LoggedIn.context";
 
 const useStyles = makeStyles((theme) => ({
 	banner: {
@@ -93,14 +94,21 @@ const useStyles = makeStyles((theme) => ({
 		border: "1px solid #e5e5e5",
 		padding: "1rem",
 	},
+	errors: {
+		textAlign: "left",
+		color: "#b85c5c",
+		fontWeight: "bold",
+	},
 }));
 
 export default function Article(props) {
+	const { user } = useContext(LoggedInContext);
 	const { slug } = props.match.params;
 	const [article, setArticle] = useState({});
 	const [comments, setComments] = useState([]);
 	const [author, setAuthor] = useState({});
 	const [loggedIn, setLoggedIn] = useState(false);
+	const [error, setError] = useState(false);
 	const { value: comment, bind: bindComment, reset } = useInputState("");
 
 	const fetchComments = () => {
@@ -151,7 +159,12 @@ export default function Article(props) {
 					},
 				},
 			)
-			.then(fetchComments());
+			.then(() => {
+				setError(false);
+				reset();
+				fetchComments();
+			})
+			.catch((error) => setError(true));
 	};
 
 	const classes = useStyles();
@@ -183,6 +196,11 @@ export default function Article(props) {
 						<Link to='/register'>Sign up</Link> to add comments on this article.
 					</p>
 				)}
+				{error && (
+					<ul className={classes.errors}>
+						<li>Comment can't be blank</li>
+					</ul>
+				)}
 				{loggedIn && (
 					<>
 						<TextField
@@ -198,7 +216,7 @@ export default function Article(props) {
 							className={classes.textArea}
 						/>
 						<div className={classes.cardFooter}>
-							<img src={author.image} />
+							<img src={user.image} />
 							<Button
 								color='primary'
 								variant='contained'
