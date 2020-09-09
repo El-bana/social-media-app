@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Grid, TextField, Button } from "@material-ui/core";
+import { Grid, TextField, Button, Divider } from "@material-ui/core";
 import useInputState from "./Hooks/useInputState";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,23 +16,54 @@ const useStyles = makeStyles((theme) => ({
 			color: "rgba(0,0,0,0.7)",
 		},
 	},
-	btn: {
-		color: "white",
+	logOut: {
 		float: "right",
-		padding: "1rem",
-		fontSize: "1rem",
-		fontWeight: "500",
+	},
+	signIn: {
+		float: "left",
 	},
 }));
 
 export default function Settings() {
-	const { user, pass } = useContext(LoggedInContext);
+	const { user } = useContext(LoggedInContext);
 	const { value: image, bind: bindImage } = useInputState(user.image);
 	const { value: username, bind: bindUsername } = useInputState(user.username);
 	const { value: bio, bind: bindBio } = useInputState(user.bio);
 	const { value: email, bind: bindEmail } = useInputState(user.email);
-	const { value: password, bind: bindPassword } = useInputState(pass);
+	const { value: password, bind: bindPassword } = useInputState(
+		localStorage.getItem("password"),
+	);
 	const classes = useStyles();
+
+	const handleLogOut = () => {
+		localStorage.clear();
+		window.location = "/";
+	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		axios
+			.put(
+				"https://conduit.productionready.io/api/user",
+				{
+					user: {
+						email: email,
+						bio: bio,
+						image: image,
+						username: username,
+						password: password,
+					},
+				},
+				{
+					headers: { Authorization: `Token ${localStorage.getItem("token")}` },
+				},
+			)
+			.then((res) => {
+				console.log(res);
+				localStorage.setItem("password", password);
+				window.location = "/";
+			})
+			.catch((err) => console.log(err));
+	};
 
 	return (
 		<Grid
@@ -44,7 +75,7 @@ export default function Settings() {
 		>
 			<Grid item xs={6} className={classes.root}>
 				<h1>Your Settings</h1>
-				<form>
+				<form onSubmit={handleSubmit}>
 					<TextField
 						type='text'
 						value={image}
@@ -92,6 +123,24 @@ export default function Settings() {
 						margin='normal'
 						fullWidth
 					/>
+					<Divider style={{ margin: "1rem" }} />
+					<Button
+						color='primary'
+						variant='contained'
+						type='submit'
+						className={classes.signIn}
+					>
+						Update Settings
+					</Button>
+
+					<Button
+						variant='contained'
+						color='secondary'
+						className={classes.logOut}
+						onClick={handleLogOut}
+					>
+						Log Out
+					</Button>
 				</form>
 			</Grid>
 		</Grid>
