@@ -60,10 +60,10 @@ export default function SignInForm(props) {
 				"https://conduit.productionready.io/api/users/login",
 				{ user: { email: email, password: password } },
 			);
-			console.log(res.data);
 			setErrors(false);
 			setUser(res.data.user.username);
 			localStorage.setItem("token", res.data.user.token);
+			localStorage.setItem("password", password);
 			window.location = "/";
 		} catch (error) {
 			console.log(error.response.data.errors);
