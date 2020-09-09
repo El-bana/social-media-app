@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Comments(props) {
 	const classes = useStyles();
+
 	return (
 		<Grid item xs={8} className={classes.cardBox}>
 			<div className={classes.comment}>
